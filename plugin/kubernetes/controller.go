@@ -502,7 +502,14 @@ func (dns *dnsControl) GetNamespaceByName(name string) (*object.Namespace, error
 
 func (dns *dnsControl) Add(obj interface{})               { dns.updateModified() }
 func (dns *dnsControl) Delete(obj interface{})            { dns.updateModified() }
-func (dns *dnsControl) Update(oldObj, newObj interface{}) { dns.detectChanges(oldObj, newObj) }
+
+func (dns *dnsControl) Update(oldObj, newObj interface{}) { 
+    fmt.Println("[TEST] dnsControl.Update called")
+    fmt.Println("[TEST] oldObj:", oldObj)
+    fmt.Println("[TEST] newObj:", newObj)
+    time.Sleep(60 * time.Second)
+    dns.detectChanges(oldObj, newObj) 
+}
 
 // detectChanges detects changes in objects, and updates the modified timestamp
 func (dns *dnsControl) detectChanges(oldObj, newObj interface{}) {

@@ -23,19 +23,24 @@ coredns: $(CHECKS)
 check: core/plugin/zplugin.go core/dnsserver/zdirectives.go
 
 core/plugin/zplugin.go core/dnsserver/zdirectives.go: plugin.cfg
-	go generate coredns.go
-	go get
+	go generate coredns.go ;
+	go get ;
 
 .PHONY: gen
 gen:
-	go generate coredns.go
-	go get
+	go generate coredns.go ;
+	go get ;
 
 .PHONY: pb
 pb:
 	$(MAKE) -C pb
 
+.PHONY: build
+build: coredns
+	docker build --pull -t ghcr.io/pan-ziyue/coredns:1.11.3 .
+	docker push ghcr.io/pan-ziyue/coredns:1.11.3
+	
 .PHONY: clean
 clean:
-	go clean
+	go clean ;
 	rm -f coredns
